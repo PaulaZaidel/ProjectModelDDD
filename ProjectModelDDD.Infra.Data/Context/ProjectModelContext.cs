@@ -10,5 +10,6 @@ namespace ProjectModelDDD.Infra.Data.Context
             : base (options) { }
 
         public DbSet<Client> Clients { get; set; }
+        public DbSet<Product> Products { get; set; }
     }
 }
