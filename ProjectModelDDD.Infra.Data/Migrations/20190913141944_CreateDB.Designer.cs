@@ -9,8 +9,8 @@ using ProjectModelDDD.Infra.Data.Context;
 namespace ProjectModelDDD.Infra.Data.Migrations
 {
     [DbContext(typeof(ProjectModelContext))]
-    [Migration("20190911232038_AddProduct")]
-    partial class AddProduct
+    [Migration("20190913141944_CreateDB")]
+    partial class CreateDB
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -27,11 +27,16 @@ namespace ProjectModelDDD.Infra.Data.Migrations
 
                     b.Property<DateTime>("Created");
 
-                    b.Property<string>("Email");
+                    b.Property<string>("Email")
+                        .IsRequired();
 
-                    b.Property<string>("FirstName");
+                    b.Property<string>("FirstName")
+                        .IsRequired()
+                        .HasMaxLength(150);
 
-                    b.Property<string>("LastName");
+                    b.Property<string>("LastName")
+                        .IsRequired()
+                        .HasMaxLength(150);
 
                     b.HasKey("Id");
 
@@ -47,7 +52,11 @@ namespace ProjectModelDDD.Infra.Data.Migrations
 
                     b.Property<int>("ClientId");
 
-                    b.Property<string>("Name");
+                    b.Property<int?>("ClientId1");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(250);
 
                     b.Property<decimal>("Price");
 
@@ -55,15 +64,21 @@ namespace ProjectModelDDD.Infra.Data.Migrations
 
                     b.HasIndex("ClientId");
 
+                    b.HasIndex("ClientId1");
+
                     b.ToTable("Products");
                 });
 
             modelBuilder.Entity("ProjectModelDDD.Domain.Entities.Product", b =>
                 {
                     b.HasOne("ProjectModelDDD.Domain.Entities.Client", "Client")
-                        .WithMany("Products")
+                        .WithMany()
                         .HasForeignKey("ClientId")
                         .OnDelete(DeleteBehavior.Cascade);
+
+                    b.HasOne("ProjectModelDDD.Domain.Entities.Client")
+                        .WithMany("Products")
+                        .HasForeignKey("ClientId1");
                 });
 #pragma warning restore 612, 618
         }
