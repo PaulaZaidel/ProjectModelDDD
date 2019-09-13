@@ -5,11 +5,15 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using ProjectModelDDD.Infra.Data.Context;
 using AutoMapper;
 using ProjectModelDDD.MVC.AutoMapper;
-using ProjectModelDDD.Infra.Data.Repositories;
 using ProjectModelDDD.Domain.Interfaces.Repositories;
+using ProjectModelDDD.Infra.Data.Repositories;
+using ProjectModelDDD.Infra.Data.Context;
+using ProjectModelDDD.Application.Interface;
+using ProjectModelDDD.Application;
+using ProjectModelDDD.Domain.Interfaces.Services;
+using ProjectModelDDD.Domain.Services;
 
 namespace ProjectModelDDD.MVC
 {
@@ -36,8 +40,16 @@ namespace ProjectModelDDD.MVC
 
             services.AddAutoMapper(typeof(AutoMapperConfig));
 
+            services.AddScoped<IClientAppService, ClientAppService>();
+            services.AddScoped<IProductAppService, ProductAppService>();
+
+            services.AddScoped<IClientService, ClientService>();
+            services.AddScoped<IProductService, ProductService>();
+
             services.AddScoped<IClientRepository, ClientRepository>();
             services.AddScoped<IProductRepository, ProductRepository>();
+
+            
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
 

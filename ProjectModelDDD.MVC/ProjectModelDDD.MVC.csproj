@@ -13,6 +13,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\ProjectModelDDD.Application\ProjectModelDDD.Application.csproj" />
     <ProjectReference Include="..\ProjectModelDDD.Domain\ProjectModelDDD.Domain.csproj" />
     <ProjectReference Include="..\ProjectModelDDD.Infra.Data\ProjectModelDDD.Infra.Data.csproj" />
   </ItemGroup>

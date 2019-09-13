@@ -1,37 +1,48 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using AutoMapper;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using ProjectModelDDD.Application.Interface;
 using ProjectModelDDD.Domain.Entities;
-using ProjectModelDDD.Domain.Interfaces.Repositories;
-using ProjectModelDDD.Infra.Data.Repositories;
 using ProjectModelDDD.MVC.ViewModels;
 
 namespace ProjectModelDDD.MVC.Controllers
 {
     public class ClientsController : Controller
     {
-        private readonly IClientRepository _repository;
+        private readonly IClientAppService _service;
         private readonly IMapper _mapper;
 
-        public ClientsController(IClientRepository repository, IMapper mapper)
+        public ClientsController(IClientAppService service, IMapper mapper)
         {
-            _repository = repository;
+            _service = service;
             _mapper = mapper;
         }
 
         // GET: Client
         public ActionResult Index()
         {
-            var clients = _repository.GetAll();
+            var clients = _service.GetAll();
             var clientsViewModel = _mapper.Map<IEnumerable<ClientViewModel>>(clients);
+
+            return View(clientsViewModel);
+        }
+
+        public ActionResult Especials()
+        {
+            var clients = _service.GetEspecialClients();
+            var clientsViewModel = _mapper.Map<IEnumerable<ClientViewModel>>(clients);
+
             return View(clientsViewModel);
         }
 
         // GET: Client/Details/5
         public ActionResult Details(int id)
         {
-            return View();
+            var client = _service.GetById(id);
+            var clientViewModel = _mapper.Map<ClientViewModel>(client);
+
+            return View(clientViewModel);
         }
 
         // GET: Client/Create
@@ -48,7 +59,10 @@ namespace ProjectModelDDD.MVC.Controllers
             if (ModelState.IsValid)
             {
                 var client = _mapper.Map<Client>(clientViewModel);
-                _repository.Add(client);
+
+                client.Created = DateTime.Now;
+
+                _service.Add(client);
 
                 return RedirectToAction("Index");
             }
@@ -59,47 +73,46 @@ namespace ProjectModelDDD.MVC.Controllers
         // GET: Client/Edit/5
         public ActionResult Edit(int id)
         {
-            return View();
+            var client = _service.GetById(id);
+            var clientViewModel = _mapper.Map<ClientViewModel>(client);
+
+            return View(clientViewModel);
         }
 
         // POST: Client/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit(int id, IFormCollection collection)
+        public ActionResult Edit(ClientViewModel clientViewModel)
         {
-            try
+            if (ModelState.IsValid)
             {
-                // TODO: Add update logic here
+                var client = _mapper.Map<Client>(clientViewModel);
+                _service.Update(client);
 
-                return RedirectToAction(nameof(Index));
+                return RedirectToAction("Index");
             }
-            catch
-            {
-                return View();
-            }
+
+            return View(clientViewModel);
         }
 
         // GET: Client/Delete/5
         public ActionResult Delete(int id)
         {
-            return View();
+            var client = _service.GetById(id);
+            var clientViewModel = _mapper.Map<ClientViewModel>(client);
+
+            return View(clientViewModel);
         }
 
         // POST: Client/Delete/5
-        [HttpPost]
+        [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        public ActionResult Delete(int id, IFormCollection collection)
+        public ActionResult DeleteConfirmed(int id)
         {
-            try
-            {
-                // TODO: Add delete logic here
+            var client = _service.GetById(id);
+            _service.Remove(client);
 
-                return RedirectToAction(nameof(Index));
-            }
-            catch
-            {
-                return View();
-            }
+            return RedirectToAction("Index");
         }
     }
 }
