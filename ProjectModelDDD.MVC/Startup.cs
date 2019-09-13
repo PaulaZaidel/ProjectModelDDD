@@ -6,6 +6,10 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using ProjectModelDDD.Infra.Data.Context;
+using AutoMapper;
+using ProjectModelDDD.MVC.AutoMapper;
+using ProjectModelDDD.Domain.Interfaces;
+using ProjectModelDDD.Infra.Data.Repositories;
 
 namespace ProjectModelDDD.MVC
 {
@@ -30,7 +34,13 @@ namespace ProjectModelDDD.MVC
 
             services.AddDbContext<ProjectModelContext>(x => x.UseSqlite(Configuration.GetConnectionString("DefaultConnection")));
 
+            services.AddAutoMapper(typeof(AutoMapperConfig));
+
+            services.AddScoped<IClientRepository, ClientRepository>();
+            services.AddScoped<IProductRepository, ProductRepository>();
+
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
