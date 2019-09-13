@@ -10,19 +10,19 @@ namespace ProjectModelDDD.MVC.Controllers
 {
     public class ClientsController : Controller
     {
-        private readonly IClientAppService _service;
+        private readonly IClientAppService _serviceApp;
         private readonly IMapper _mapper;
 
         public ClientsController(IClientAppService service, IMapper mapper)
         {
-            _service = service;
+            _serviceApp = service;
             _mapper = mapper;
         }
 
         // GET: Client
         public ActionResult Index()
         {
-            var clients = _service.GetAll();
+            var clients = _serviceApp.GetAll();
             var clientsViewModel = _mapper.Map<IEnumerable<ClientViewModel>>(clients);
 
             return View(clientsViewModel);
@@ -30,7 +30,7 @@ namespace ProjectModelDDD.MVC.Controllers
 
         public ActionResult Especials()
         {
-            var clients = _service.GetEspecialClients();
+            var clients = _serviceApp.GetEspecialClients();
             var clientsViewModel = _mapper.Map<IEnumerable<ClientViewModel>>(clients);
 
             return View(clientsViewModel);
@@ -39,7 +39,7 @@ namespace ProjectModelDDD.MVC.Controllers
         // GET: Client/Details/5
         public ActionResult Details(int id)
         {
-            var client = _service.GetById(id);
+            var client = _serviceApp.GetById(id);
             var clientViewModel = _mapper.Map<ClientViewModel>(client);
 
             return View(clientViewModel);
@@ -62,7 +62,7 @@ namespace ProjectModelDDD.MVC.Controllers
 
                 client.Created = DateTime.Now;
 
-                _service.Add(client);
+                _serviceApp.Add(client);
 
                 return RedirectToAction("Index");
             }
@@ -73,7 +73,7 @@ namespace ProjectModelDDD.MVC.Controllers
         // GET: Client/Edit/5
         public ActionResult Edit(int id)
         {
-            var client = _service.GetById(id);
+            var client = _serviceApp.GetById(id);
             var clientViewModel = _mapper.Map<ClientViewModel>(client);
 
             return View(clientViewModel);
@@ -87,7 +87,7 @@ namespace ProjectModelDDD.MVC.Controllers
             if (ModelState.IsValid)
             {
                 var client = _mapper.Map<Client>(clientViewModel);
-                _service.Update(client);
+                _serviceApp.Update(client);
 
                 return RedirectToAction("Index");
             }
@@ -98,7 +98,7 @@ namespace ProjectModelDDD.MVC.Controllers
         // GET: Client/Delete/5
         public ActionResult Delete(int id)
         {
-            var client = _service.GetById(id);
+            var client = _serviceApp.GetById(id);
             var clientViewModel = _mapper.Map<ClientViewModel>(client);
 
             return View(clientViewModel);
@@ -109,8 +109,8 @@ namespace ProjectModelDDD.MVC.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
-            var client = _service.GetById(id);
-            _service.Remove(client);
+            var client = _serviceApp.GetById(id);
+            _serviceApp.Remove(client);
 
             return RedirectToAction("Index");
         }
