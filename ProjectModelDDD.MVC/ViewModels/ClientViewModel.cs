@@ -13,11 +13,13 @@ namespace ProjectModelDDD.MVC.ViewModels
         [Required(ErrorMessage = "Required field")]
         [MaxLength(150, ErrorMessage = "{0} characters max")]
         [MinLength(2, ErrorMessage = "{0} characters minimum")]
+        [Display(Name = "First Name")]
         public string FirstName { get; set; }
 
         [Required(ErrorMessage = "Required field")]
         [MaxLength(150, ErrorMessage = "{0} characters max")]
         [MinLength(2, ErrorMessage = "{0} characters minimum")]
+        [Display(Name = "Last Name")]
         public string LastName { get; set; }
 
         [Required(ErrorMessage = "Required field")]
