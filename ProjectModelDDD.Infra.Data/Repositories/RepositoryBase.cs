@@ -1,7 +1,7 @@
 ﻿
 using Microsoft.EntityFrameworkCore;
 using ProjectModelDDD.Domain.Entities;
-using ProjectModelDDD.Domain.Interfaces;
+using ProjectModelDDD.Domain.Interfaces.Repositories;
 using ProjectModelDDD.Infra.Data.Context;
 using System;
 using System.Collections.Generic;

@@ -8,8 +8,8 @@ using Microsoft.Extensions.DependencyInjection;
 using ProjectModelDDD.Infra.Data.Context;
 using AutoMapper;
 using ProjectModelDDD.MVC.AutoMapper;
-using ProjectModelDDD.Domain.Interfaces;
 using ProjectModelDDD.Infra.Data.Repositories;
+using ProjectModelDDD.Domain.Interfaces.Repositories;
 
 namespace ProjectModelDDD.MVC
 {

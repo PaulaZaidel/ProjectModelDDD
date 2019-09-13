@@ -3,7 +3,7 @@ using AutoMapper;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using ProjectModelDDD.Domain.Entities;
-using ProjectModelDDD.Domain.Interfaces;
+using ProjectModelDDD.Domain.Interfaces.Repositories;
 using ProjectModelDDD.Infra.Data.Repositories;
 using ProjectModelDDD.MVC.ViewModels;
 
