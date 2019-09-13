@@ -11,6 +11,5 @@ namespace ProjectModelDDD.Domain.Interfaces
         IEnumerable<TEntity> GetAll();
         void Update(TEntity entity);
         void Remove(TEntity entity);
-        void Dispose();
     }
 }

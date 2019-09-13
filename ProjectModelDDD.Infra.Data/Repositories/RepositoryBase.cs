@@ -9,7 +9,7 @@ using System.Linq;
 
 namespace ProjectModelDDD.Infra.Data.Repositories
 {
-    public class RepositoryBase<TEntity> : IDisposable, IRepositoryBase<TEntity> where TEntity : EntityBase
+    public class RepositoryBase<TEntity> : IRepositoryBase<TEntity> where TEntity : EntityBase
     {
         protected readonly ProjectModelContext _context;
 
@@ -23,7 +23,7 @@ namespace ProjectModelDDD.Infra.Data.Repositories
             _context.Set<TEntity>().Add(entity);
             _context.SaveChanges();
         }
-        
+
         public IEnumerable<TEntity> GetAll()
         {
             return _context.Set<TEntity>().ToList();
@@ -44,11 +44,6 @@ namespace ProjectModelDDD.Infra.Data.Repositories
         {
             _context.Entry(entity).State = EntityState.Modified;
             _context.SaveChanges();
-        }
-
-        public void Dispose()
-        {
-            throw new NotImplementedException();
         }
     }
 }
